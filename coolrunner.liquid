@@ -1,0 +1,301 @@
+<div id="coolrunner_support">
+    <div id="customer-info__wrapper">
+        <h2>Kunde</h2>
+        <div class="customer-info" id="customer_name">
+            <div class="icon-wrapper">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                    <path id="user-alt-light"
+                          d="M8,1A3.5,3.5,0,1,1,4.5,4.5,3.5,3.5,0,0,1,8,1m4,10a3,3,0,0,1,3,3v1H1V14a3,3,0,0,1,3-3c2.656,0,2.1.5,4,.5s1.341-.5,4-.5M8,0a4.5,4.5,0,1,0,4.5,4.5A4.5,4.5,0,0,0,8,0Zm4,10c-2.887,0-2.219.5-4,.5S6.884,10,4,10a4,4,0,0,0-4,4v1a1,1,0,0,0,1,1H15a1,1,0,0,0,1-1V14A4,4,0,0,0,12,10Z"
+                          fill="#272727" />
+                </svg>
+            </div>
+            <p>
+                {{ name }}
+            </p>
+        </div>
+
+        <div class="customer-info" id="customer_address">
+            <div class="icon-wrapper">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16">
+                    <path id="map-pin-light"
+                          d="M4.5,0A4.488,4.488,0,0,0,4,8.95V15.4l.344.516a.187.187,0,0,0,.312,0L5,15.4V8.95A4.488,4.488,0,0,0,4.5,0Zm0,8A3.5,3.5,0,1,1,8,4.5,3.5,3.5,0,0,1,4.5,8Zm0-6A2.5,2.5,0,0,0,2,4.5a.5.5,0,0,0,1,0A1.5,1.5,0,0,1,4.5,3a.5.5,0,0,0,0-1Z"
+                          fill="#272727" />
+                </svg>
+            </div>
+            <p>
+                {{ address.formatted }}
+            </p>
+        </div>
+
+        <div class="customer-info" id="customer_email">
+            <div class="icon-wrapper">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12">
+                    <path id="envelope-light"
+                          d="M14.5,64H1.5A1.5,1.5,0,0,0,0,65.5v9A1.5,1.5,0,0,0,1.5,76h13A1.5,1.5,0,0,0,16,74.5v-9A1.5,1.5,0,0,0,14.5,64Zm-13,1h13a.5.5,0,0,1,.5.5v1.294c-.684.578-1.663,1.375-4.706,3.791C9.766,71,8.725,72.012,8,72c-.725.012-1.769-1-2.294-1.416C2.662,68.169,1.684,67.372,1,66.794V65.5A.5.5,0,0,1,1.5,65Zm13,10H1.5a.5.5,0,0,1-.5-.5V68.094c.712.584,1.838,1.488,4.084,3.272C5.725,71.878,6.856,73.006,8,73c1.137.009,2.259-1.109,2.916-1.634,2.247-1.784,3.372-2.687,4.084-3.272V74.5A.5.5,0,0,1,14.5,75Z"
+                          transform="translate(0 -64)" fill="#272727" />
+                </svg>
+            </div>
+            <p>
+                {{ email }}
+            </p>
+        </div>
+
+        <div class="customer-info" id="customer_phone">
+            <div class="icon-wrapper">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
+                    <path id="mobile-light"
+                          d="M6,13a1,1,0,1,1-1-1A1,1,0,0,1,6,13ZM10,1.5v13A1.5,1.5,0,0,1,8.5,16h-7A1.5,1.5,0,0,1,0,14.5V1.5A1.5,1.5,0,0,1,1.5,0h7A1.5,1.5,0,0,1,10,1.5Zm-1,0A.5.5,0,0,0,8.5,1h-7a.5.5,0,0,0-.5.5v13a.5.5,0,0,0,.5.5h7a.5.5,0,0,0,.5-.5Z"
+                          fill="#272727" />
+                </svg>
+            </div>
+            <p>
+                {{ phone }}
+            </p>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 24px;" id="shipments">
+        <h2>Forsendelser</h2>
+        <div class="table" style="display: flex; flex-direction: column;">
+            <div class="list">
+                {% for shipment in shipments %}
+                <div class="accordion">
+                    <input type="checkbox" id="shipment_{{ shipment.package_number }}">
+                    <label class="tab-label" for="shipment_{{ shipment.package_number }}">
+                        <p class="order_number">{{ shipment.identifier }}</p>
+                        <p class="order_date">{{ shipment.date_formatted }}</p>
+                    </label>
+                    <div class="tab-content">
+                        <div style="overflow: hidden;">
+                            <p>
+                                {{ shipment.package_number }}
+                            </p>
+                            <div class="timeline">
+                                {% for event in shipment.tracking %}
+                                <div class="entry">
+                                    <p class="tracking_title">{{ event.description }}</p>
+                                    <p class="tracking_date">{{ event.date }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <a class="button" target="_blank"
+                               href="https://account.coolrunner.dk/labels?filter%5Bpackage_number%5D={{ shipment.package_number }}">Se
+                                labelinformation</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #coolrunner_support {
+        width: 320px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #coolrunner_support a,
+    #coolrunner_support p,
+    #coolrunner_support h2 {
+        font-family: 'Inter', sans-serif;
+        color: #272727;
+
+    }
+
+    #coolrunner_support #customer-info__wrapper {
+        background-color: #F7F8FA;
+        padding: 24px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    #coolrunner_support #customer-info__wrapper> :not(svg) {
+        z-index: 1;
+    }
+
+    #coolrunner_support #customer-info__wrapper #watermark {
+        z-index: 0;
+        opacity: .07;
+        position: absolute;
+        width: 75%;
+        fill: #157efb;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #coolrunner_support .customer-info {
+        display: flex;
+        margin: 8px 0;
+    }
+
+    #coolrunner_support .icon_wrapper {
+        margin-right: 12px;
+        width: 16px;
+        text-align: center;
+    }
+
+    #coolrunner_support .customer-info svg {
+        margin-right: 12px;
+        width: 16px;
+        text-align: center;
+    }
+
+    #coolrunner_support .customer-info p {
+        width: auto;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    #coolrunner_support h2 {
+        font-size: 20px;
+        margin-top: 0;
+    }
+
+    #coolrunner_support #shipments h2 {
+        margin: 0 24px 8px;
+    }
+
+    #coolrunner_support .accordion {
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: rgb(0 0 0 / 8%) 0 4px 16px;
+        margin-bottom: 8px;
+    }
+
+    #coolrunner_support .accordion input {
+        display: none;
+    }
+
+    #coolrunner_support .accordion .tab-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 24px;
+    }
+
+    #coolrunner_support .accordion .tab-label p {
+        margin: 0;
+    }
+
+    #coolrunner_support .accordion .tab-label p.order_number {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 156px;
+    }
+
+    #coolrunner_support .accordion .tab-label p.order_number:hover {
+        max-width: unset;
+        background: #ffffffc4;
+        width: max-content;
+        z-index: 23;
+        position: absolute;
+        backdrop-filter: blur(1px);
+        padding-right: 28px;
+    }
+
+    #coolrunner_support .accordion .tab-label p.order_date {
+        white-space: nowrap;
+        width: 50%;
+        right: -3.5em;
+        position: absolute;
+    }
+
+    #coolrunner_support .accordion .tab-label::after {
+        content: "❯";
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        transition: all 0.35s;
+    }
+
+    #coolrunner_support .accordion .tab-content {
+        max-height: 0;
+        padding: 0 1em;
+        color: #272727;
+        transition: all 0.35s;
+        background-color: #f7f8fa;
+    }
+
+    #coolrunner_support .accordion .tab-content p {
+        font-size: 13px;
+    }
+
+    #coolrunner_support .accordion input:checked+.tab-label::after {
+        transform: rotate(90deg);
+    }
+
+    #coolrunner_support .accordion input:checked~.tab-content {
+        max-height: 100vh;
+        padding: 1em;
+        padding-top: 0;
+    }
+
+    #coolrunner_support .button {
+        background: #157efb;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 13px;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    #coolrunner_support .timeline {
+        margin-left: 6px;
+        padding: 5px 0 5px 10px;
+        border-left: 3px solid #272727;
+    }
+
+    #coolrunner_support .entry {
+        position: relative;
+        padding-left: 10px;
+    }
+
+    #coolrunner_support .entry:not(:first-of-type) {
+        margin-top: 10px;
+    }
+
+    #coolrunner_support .entry p {
+        margin: 0;
+    }
+
+    #coolrunner_support .entry p.tracking_date {
+        font-size: 11px;
+    }
+
+
+    #coolrunner_support .entry:before {
+        content: "";
+        height: 13px;
+        width: 13px;
+        background: #f7f8fa;
+        display: block;
+        border-radius: 50%;
+        border: 1px solid #272727;
+        position: absolute;
+        left: -18px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>
